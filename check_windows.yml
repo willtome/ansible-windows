@@ -1,0 +1,7 @@
+---
+- hosts: all
+  
+  tasks:
+    - fail:
+        msg: "This is not a Windows system"
+      when: ansible_os_family != "Windows"
