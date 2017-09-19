@@ -7,9 +7,6 @@
       path: HKLM:\System\CurrentControlSet\Control\Terminal Server
       name: fDenyTSConnections
       value: 0
-  - name: enable firewall
-    win_firewall:
-      state: enabled
   - name: Firewall rule to allow RDP on TCP port 3389
     win_firewall_rule:
       name: Remote Desktop
