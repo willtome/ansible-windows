@@ -1,7 +1,12 @@
 ---
 - hosts: windows9Server64Guest
-  
+  var_files:
+    - vars/domain.yml 
+ 
   tasks:
+  - win_dns_client:
+    adapter_names: "*"
+    ipv4_addresses: 10.0.0.11
   - name: enable RDP
     win_regedit:
       path: HKLM:\System\CurrentControlSet\Control\Terminal Server
@@ -16,3 +21,11 @@
       protocol: tcp
       state: present
       enabled: yes
+  - win_domain_membership:
+      dns_domain_name: ad.mod.local 
+      domain_admin_user: "{{ domain_admin }}"
+      domain_admin_password: "{{ domain_pass }}"
+      state: domain
+    register: domain_state
+  - win_reboot:
+    when: domain_state.reboot_required
