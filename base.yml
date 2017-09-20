@@ -1,6 +1,6 @@
 ---
 - hosts: windows9Server64Guest
-  var_files:
+  vars_files:
     - vars/domain.yml 
  
   tasks:
