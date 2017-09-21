@@ -1,8 +1,8 @@
 ---
-- hosts: windows9Server64Guest
+- hosts: windows2016
   vars_files:
-    - vars/domain.yml 
- 
+    - vars/domain.yml
+
   tasks:
   - name: dns servers
     win_dns_client:
@@ -23,7 +23,7 @@
       state: present
       enabled: yes
   - win_domain_membership:
-      dns_domain_name: ad.mod.local 
+      dns_domain_name: ad.mod.local
       domain_admin_user: "{{ domain_admin }}@ad.mod.local"
       domain_admin_password: "{{ domain_pass }}"
       state: domain
