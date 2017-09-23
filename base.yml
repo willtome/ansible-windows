@@ -8,6 +8,9 @@
     win_dns_client:
       adapter_names: "*"
       ipv4_addresses: 10.0.0.11
+  - name: set timezone
+    win_timezone:
+      timezone: Eastern Standard Time 
   - name: enable RDP
     win_regedit:
       path: HKLM:\System\CurrentControlSet\Control\Terminal Server
