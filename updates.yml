@@ -1,0 +1,28 @@
+---
+- hosts: all:!exempt
+  gather_facts: no
+  serial: 1
+
+  tasks:
+  - name: set mod_name
+    set_fact: 
+      mod_name: "{{ config }}"
+  - name: stage script
+    win_template:
+      src: templates/VeeamZip.ps1.j2
+      dest: C:\Windows\Temp\VeeamZip.ps1
+    delegate_to: veeam
+  - name: backup {{ mod_name }}
+    win_shell: C:\Windows\Temp\VeeamZip.ps1
+    delegate_to: veeam
+  - name: remove script
+    win_file:
+      path: C:\Windows\Temp\VeeamZip.ps1
+      state: absent
+    delegate_to: veeam
+  - name: install windows updates
+    win_updates:
+    register: update_result
+  - name: reboot if required by updates
+    win_reboot:
+    when: update_result.reboot_required

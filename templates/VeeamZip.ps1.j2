@@ -1,0 +1,6 @@
+﻿Add-PSSnapin VeeamPSSnapin
+Connect-VBRServer
+$vm = Find-VBRViEntity -Name "{{ mod_name }}"
+$netcreds = Get-VBRCredentials -Name "AD\Administrator"
+Start-VBRZip -Folder "\\wtome-nas.ad.mod.local\Backup" -Entity $vm -AutoDelete Tonight -DisableQuiesce -NetworkCredentials $netcreds
+Disconnect-VBRServer
