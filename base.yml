@@ -10,22 +10,18 @@
       ipv4_addresses: 10.0.0.11
   - name: set timezone
     win_timezone:
-      timezone: Eastern Standard Time 
+      timezone: Eastern Standard Time
+  - name: enable firewall
+    win_firewall: state=enabled
   - name: enable RDP
     win_regedit:
       path: HKLM:\System\CurrentControlSet\Control\Terminal Server
       name: fDenyTSConnections
       value: 0
-  - name: Firewall rule to allow RDP on TCP port 3389
-    win_firewall_rule:
-      name: Remote Desktop
-      localport: 3389
-      action: allow
-      direction: in
-      protocol: tcp
-      state: present
-      enabled: yes
-  - win_domain_membership:
+  - name: allow RDP
+    win_shell: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+  - name: domain membership
+    win_domain_membership:
       dns_domain_name: ad.mod.local
       domain_admin_user: "{{ domain_admin }}@ad.mod.local"
       domain_admin_password: "{{ domain_pass }}"
