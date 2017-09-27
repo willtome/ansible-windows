@@ -35,5 +35,4 @@
       state: present
     when: local_admins is defined
     register: result
-    failed_when: "'already' not in result.msg"
-  - debug: msg="{{ result }}"
+    failed_when: "result.msg is defined and 'already' not in result.msg"
