@@ -29,3 +29,10 @@
     register: domain_state
   - win_reboot:
     when: domain_state.reboot_required
+  - win_group_membership:
+      name: Administrators
+      members: "{{ local_admins }}"
+      state: present
+    when: local_admins is defined
+    register: result
+    failed_when: "'already' not in result.msg"
