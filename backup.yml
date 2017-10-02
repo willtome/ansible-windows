@@ -1,0 +1,18 @@
+---
+- hosts: veeam
+  gather_facts: no
+ 
+  vars: 
+    # mod_name: Name of VM in vCenter that you want backed up 
+ 
+  tasks:
+  - name: stage script
+    win_template:
+      src: templates/VeeamZip.ps1.j2
+      dest: C:\Windows\Temp\VeeamZip.ps1
+  - name: backup {{ mod_name }}
+    win_shell: C:\Windows\Temp\VeeamZip.ps1
+  - name: remove script
+    win_file:
+      path: C:\Windows\Temp\VeeamZip.ps1
+      state: absent
