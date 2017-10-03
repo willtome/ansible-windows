@@ -36,3 +36,7 @@
     when: local_admins is defined
     register: result
     failed_when: "result.msg is defined and 'already' not in result.msg"
+  - name: ensure common tools are installed
+    win_chocolatey:
+      name: '{{ item }}'
+    with_items: ['sysinternals', 'googlechrome']
