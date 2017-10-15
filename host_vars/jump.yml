@@ -1,0 +1,7 @@
+---
+host_apps:
+  - bluejeansapp
+  - atom
+  - git
+  - visualstudiocode
+  - libreoffice
