@@ -1,4 +1,5 @@
 ---
+domain_name: ad.maxdepth.io
 domain_admin: Administrator 
 domain_pass: !vault |
           $ANSIBLE_VAULT;1.1;AES256
