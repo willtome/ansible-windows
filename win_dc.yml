@@ -1,0 +1,31 @@
+---
+- hosts: dc
+  gather_facts: false
+  vars:
+    domain_pass: !vault |
+         $ANSIBLE_VAULT;1.1;AES256
+         39343931373634663865343333333438643431363236323261386231376133306238646337343763
+         6366373264393835653364303937613761626461633238350a353134393135383732393736363266
+         66613238663234343963616164633565613632643139376163616232666335626236393735396564
+         3532396233313139340a656632383939383864613931653465363464666539393139646530343036
+         6634
+  tasks:
+  - name: install domain services
+    win_feature:
+      name: AD-Domain-Services
+      include_management_tools: yes
+      include_sub_features: yes
+      state: present
+  - name: configure domain
+    win_domain:
+      dns_domain_name: ad.maxdepth.io
+      safe_mode_password: "{{ domain_pass }}"
+    register: result
+  - name:
+    win_reboot:
+    when: result.reboot_required
+
+  - name:
+    win_psmodule:
+      name: xActiveDirectory
+      state: present
