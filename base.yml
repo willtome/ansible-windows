@@ -59,7 +59,7 @@
 
   - win_group_membership:
       name: Administrators
-      members: "AD\vm-{{ inventory_hostname }}"
+      members: "AD\\vm-{{ inventory_hostname }}"
       state: present
 
   - name: group apps
