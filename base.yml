@@ -39,7 +39,7 @@
   - win_dsc:
       resource_name: xADGroup
       Ensure: present
-      Group_name: "vm-{{inventory_hostname}}"
+      GroupName: "vm-{{inventory_hostname}}"
       Path: "OU=grp,DC=ad,DC=maxdepth,DC=io"
     delegate_to: dc
 
