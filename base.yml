@@ -36,6 +36,13 @@
   - win_reboot:
     when: domain_state.reboot_required
 
+  - win_dsc:
+      resource_name: xADGroup
+      Ensure: present
+      Group_name: "vm-{{inventory_hostname}}"
+      Path: "OU=grp,DC=ad,DC=maxdepth,DC=io"
+    delegate_to: dc
+
   - win_group_membership:
       name: Administrators
       members: "{{ local_admins }}"
@@ -44,14 +51,14 @@
     register: result
     failed_when: "result.msg is defined and 'already' not in result.msg"
 
-  - name: group apps 
+  - name: group apps
     win_chocolatey:
       name: '{{ item }}'
       state: latest
     with_items: '{{ group_apps }}'
     when: group_apps is defined
 
-  - name: host apps 
+  - name: host apps
     win_chocolatey:
       name: '{{ item }}'
       state: latest
