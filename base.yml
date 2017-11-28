@@ -1,5 +1,6 @@
 ---
 - hosts: windows2016
+  gather_facts: no
   serial: 1
 
   tasks:
@@ -55,6 +56,11 @@
     when: local_admins is defined
     register: result
     failed_when: "result.msg is defined and 'already' not in result.msg"
+
+  - win_group_membership:
+      name: Administrators
+      members: "AD\vm-{{ inventory_hostname }}"
+      state: present
 
   - name: group apps
     win_chocolatey:
