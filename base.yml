@@ -61,6 +61,8 @@
       name: Administrators
       members: "AD\\vm-{{ inventory_hostname }}"
       state: present
+    register: grp_result
+    failed_when: "grp_result.msg is defined and 'already' not in grp_result.msg"
 
   - name: group apps
     win_chocolatey:
