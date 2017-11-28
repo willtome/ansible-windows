@@ -1,10 +1,12 @@
 ---
-- hosts: windows2016
+- name: create AD groups
+  hosts: windows2016
   gather_facts: no
   serial: 1
 
   tasks:
-  - win_dsc:
+  - name: create group for machine
+    win_dsc:
       resource_name: xADGroup
       Ensure: present
       GroupName: "vm-{{inventory_hostname}}"
@@ -12,7 +14,8 @@
     delegate_to: dc
 
 
-- hosts: windows2016
+- name: apply base configuration
+  hosts: windows2016
   vars_files:
     - vars/domain.yml
 
