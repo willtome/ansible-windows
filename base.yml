@@ -38,8 +38,27 @@
       name: fDenyTSConnections
       value: 0
 
-  - name: allow RDP
-    win_shell: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+#  - name: allow RDP
+#    win_shell: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+
+  - win_psmodule:
+      name: xNetworking
+      state: present
+
+  - win_dsc:
+      resource_name: xFirewall
+      Name: "Remote Desktop - Shadow (TCP-In)"
+      Enabled: True
+
+  - win_dsc:
+      resource_name: xFirewall
+      Name: "Remote Desktop - User Mode (TCP-In)"
+      Enabled: True
+
+  - win_dsc:
+      resource_name: xFirewall
+      Name: "Remote Desktop - User Mode (UDP-In)"
+      Enabled: True
 
   - name: domain membership
     win_domain_membership:
