@@ -12,8 +12,6 @@
         - name: Install missing updates.
           win_updates:
             category_names:
-          win_updates:
-            category_names:
               - Application
               - Connectors
               - CriticalUpdates
