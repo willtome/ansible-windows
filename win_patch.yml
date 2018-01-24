@@ -8,6 +8,7 @@
           register: update_count
       tags: check
     #Install missing updates only if at least one is missing
+    
     - block:
         - name: Install missing updates.
           win_updates:
